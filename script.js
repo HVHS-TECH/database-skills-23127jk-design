@@ -25,6 +25,14 @@ function helloWorld() {
     }
   )
 }
+function simpleRead() {
+  console.log("Running users()")
+  firebase.database().ref('user/users').set(
+    {
+     
+    }
+  )
+}
 function xiao() {
   console.log("Running xiao()")
   firebase.database().ref('user/xiao').set(
