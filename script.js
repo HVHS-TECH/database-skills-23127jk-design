@@ -17,11 +17,20 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
-function helloWorld(){
+function helloWorld() {
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
       message: 'Hello World!'
+    }
+  )
+}
+function xiao() {
+  console.log("Running xiao()")
+  firebase.database().ref('user/xiao').set(
+    {
+      age: 99,
+      height: 5.11,
     }
   )
 }

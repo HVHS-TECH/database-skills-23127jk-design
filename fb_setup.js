@@ -7,15 +7,16 @@
 // Input:  n/a
 // Return: n/a
 /**************************************************************/
-  const firebaseConfig = {
-    apiKey: ,
-    authDomain: ,
-    databaseURL: ,
-    projectId: ,
-    storageBucket: ,
-    messagingSenderId:,
-    appId:
-  };
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyD8h8LLKS8QGQ9SOUJWneUQrbzK_tZBLW8",
+  authDomain: "jason-kim-12comp.firebaseapp.com",
+  databaseURL: "https://jason-kim-12comp-default-rtdb.firebaseio.com",
+  projectId: "jason-kim-12comp",
+  storageBucket: "jason-kim-12comp.firebasestorage.app",
+  messagingSenderId: "660928520644",
+  appId: "1:660928520644:web:524757d3aa7ff1c46a0491"
+};
 
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
