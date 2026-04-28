@@ -21,18 +21,48 @@ function helloWorld() {
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
-      message: 'Hello World!'
+      message: 'welcome to the chat'
     }
   )
 }
 function simpleRead() {
-  console.log("Running users()")
-  firebase.database().ref('user/users').set(
-    {
-     
-    }
-  )
+  console.log("reading message()")
+  firebase.database().ref('/').child('message').once('value', displayRead,);
+  console.log("leaving simpleRead")
+
 }
+
+function displayRead(snapshot) {
+  console.log("running displayRead(), the message is : " + snapshot.val())
+  HTML_OUTPUT.innerHTML = snapshot.val();
+}
+
+function display(snapshot) {
+  var dbData = snapshot.val();
+  if (dbData == null) {
+    console.log('there was no record when trying to read the message');
+  }
+  else {
+    console.log("the message is " + dbData);
+  }
+}
+
+function fb_readError(error) {
+  console.log ("there was an error reading the message");
+  console.error(error);
+}
+
+function messagecheck() {
+  console.log("reading message()")
+  firebase.database().ref('/').child('message').once('value', displayRead, fb_readError);
+  console.log("leaving simpleRead");
+}
+
+function fb_readListener(){
+  console.log("Read listener");
+  firebase.database().ref('/message').on('value', fb_logDatabaseRead)
+}
+
 function xiao() {
   console.log("Running xiao()")
   firebase.database().ref('user/xiao').set(
