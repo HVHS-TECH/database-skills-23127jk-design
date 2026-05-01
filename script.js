@@ -62,9 +62,10 @@ function fb_readListener() {
   console.log("Read Listener");
   firebase.database().ref('/message').on('value', fb_logDatabaseRead)
 }
-function fb_logDatabaseRead() {
-  console.log("read logDataBaseRead")
-  firebase.database().ref('/message').on('value', displayRead)
+function fb_logDatabaseRead(snapshot) {
+  console.log("running logDatabaseRead(), the message is : " + snapshot.val())
+  HTML_OUTPUT.innerHTML = snapshot.val();
+  //firebase.database().ref('/message').on('value', displayRead)
 }
 
 function xiao() {
@@ -80,7 +81,7 @@ function xiao() {
 firebase.database().ref('/').set(
   {
     game1: {
-      users: {
+      scores: {
         dhruv: 99999,
         jack: 10000,
         toby: 9,
@@ -93,7 +94,7 @@ firebase.database().ref('/').set(
 
 highscoreTable = {
   game1: {
-    users: {
+    scores: {
       Dhruv: 99999,
       Jack: 10000,
       Micheal: "3.141",
@@ -102,7 +103,7 @@ highscoreTable = {
     }
   },
   game2: {
-    users: {
+    scores: {
       Dhruv: 13,
       Jack: 14,
       Mikeala: 7,
@@ -111,10 +112,31 @@ highscoreTable = {
     }
   }
 }
+
+
 firebase.database().ref('/').set(highscoreTable)
-firebase.database().ref('/game1/users/jenna/').set(123456789);
-let user = "toby";
-let score = "0";
+firebase.database().ref('/game1/scores/jenna/').set(123456789);
+firebase.database().ref('/game1/scores/Benson/').set(6789);
+firebase.database().ref('/game1/scores/Ben/').set(1234);
+
+let scores = "toby";
+let score = "9";
 firebase.database().ref('/game1/users/' + user).set(
   score
 );
+
+//function fb_readHighScores() {
+ // console.log("Reading High Scores")
+ // firebase.database().ref('/game1/users').once('value', fb_logDatabaseRead, fb_readError)
+ // console.log("leaving High Scores")
+//}
+
+function Readscores(){
+console.log("Read scores")
+firebase.database().ref('/game1/scores').once('value', )
+}
+
+function displayScores(snapshot){
+console.log(snapshot.val)
+
+}
