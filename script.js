@@ -36,14 +36,14 @@ function displayRead(snapshot) {
   console.log("running displayRead(), the message is : " + snapshot.val())
   HTML_OUTPUT.innerHTML = snapshot.val();
 }
-
+ var dbData;
 function display(snapshot) {
-  var dbData = snapshot.val();
+  dbData = snapshot.val();
   if (dbData == null) {
     console.log('there was no record when trying to read the message');
   }
   else {
-    console.log("the message is " + dbData);
+    console.log(dbData);
   }
 }
 
@@ -81,7 +81,7 @@ function xiao() {
 firebase.database().ref('/').set(
   {
     game1: {
-      scores: {
+      users: {
         dhruv: 99999,
         jack: 10000,
         toby: 9,
@@ -94,7 +94,7 @@ firebase.database().ref('/').set(
 
 highscoreTable = {
   game1: {
-    scores: {
+    users: {
       Dhruv: 99999,
       Jack: 10000,
       Micheal: "3.141",
@@ -103,7 +103,7 @@ highscoreTable = {
     }
   },
   game2: {
-    scores: {
+    users: {
       Dhruv: 13,
       Jack: 14,
       Mikeala: 7,
@@ -113,30 +113,28 @@ highscoreTable = {
   }
 }
 
-
 firebase.database().ref('/').set(highscoreTable)
-firebase.database().ref('/game1/scores/jenna/').set(123456789);
-firebase.database().ref('/game1/scores/Benson/').set(6789);
-firebase.database().ref('/game1/scores/Ben/').set(1234);
+firebase.database().ref('/game1/users/jenna/').set(123456789);
+firebase.database().ref('/game1/users/Benson/').set(6789);
+firebase.database().ref('/game1/users/Ben/').set(1234);
 
-let scores = "toby";
+let user = "toby";
 let score = "9";
-firebase.database().ref('/game1/users/' + user).set(
+firebase.database().ref('/users/'+user).set(
   score
 );
 
-//function fb_readHighScores() {
- // console.log("Reading High Scores")
- // firebase.database().ref('/game1/users').once('value', fb_logDatabaseRead, fb_readError)
- // console.log("leaving High Scores")
-//}
-
-function Readscores(){
-console.log("Read scores")
-firebase.database().ref('/game1/scores').once('value', )
+function fb_readHighScores() {
+  console.log("Reading High Scores");
+  firebase.database().ref('/game1').once('value', fb_logDatabaseRead, fb_readError)
 }
 
-function displayScores(snapshot){
+function displayHighScores(snapshot){
 console.log(snapshot.val)
 
 }
+
+//let scoreObject = {
+ // "Dwayne J": 300,
+ // "Ben":3
+//}
