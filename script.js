@@ -44,6 +44,7 @@ function display(snapshot) {
   }
   else {
     console.log(dbData);
+    HTML_OUTPUT.innerHTML = snapshot.val();
   }
 }
 
@@ -64,9 +65,16 @@ function fb_readListener() {
 }
 function fb_logDatabaseRead(snapshot) {
   console.log("running logDatabaseRead(), the message is : " + snapshot.val())
-  HTML_OUTPUT.innerHTML = snapshot.val();
-  //firebase.database().ref('/message').on('value', displayRead)
+  dbData = snapshot.val();
+  if (dbData == null) {
+    console.log('there was no record when trying to read the message');
+  }
+  else {
+    console.log(dbData);
+    HTML_OUTPUT.innerHTML = snapshot.val();
+  }
 }
+
 
 function xiao() {
   console.log("Running xiao()")
@@ -78,18 +86,18 @@ function xiao() {
   )
 }
 
-firebase.database().ref('/').set(
-  {
-    game1: {
-      users: {
-        dhruv: 99999,
-        jack: 10000,
-        toby: 9,
-        yug: 987654321,
-      }
-    }
-  }
-);
+//firebase.database().ref('/').set(
+ // {
+   // game1: {
+     // users: {
+       // dhruv: 99999,
+       // jack: 10000,
+       // toby: 9,
+       // yug: 987654321,
+      //}
+    //}
+  //}
+//);
 
 
 highscoreTable = {
@@ -98,7 +106,6 @@ highscoreTable = {
       Dhruv: 99999,
       Jack: 10000,
       Micheal: "3.141",
-      Toby: 9,
       Yug: 987654321,
     }
   },
@@ -120,18 +127,22 @@ firebase.database().ref('/game1/users/Ben/').set(1234);
 
 let user = "toby";
 let score = "9";
-firebase.database().ref('/users/'+user).set(
+firebase.database().ref('/game1/users/'+user).set(
   score
 );
 
 function fb_readHighScores() {
   console.log("Reading High Scores");
-  firebase.database().ref('/game1').once('value', fb_logDatabaseRead, fb_readError)
+  firebase.database().ref('/game1').once('value',display,fb_readError,)
 }
 
 function displayHighScores(snapshot){
-console.log(snapshot.val)
-
+let highScores = snapshot.val()
+ console.log(snapshot.val())
+  console.log("the high score reads");
+  console.log(dbData);
+  console.log(dbData["Jack"]);
+  console.log("Jack got"+snapshot.val()["Jack"]+" points")
 }
 
 //let scoreObject = {
