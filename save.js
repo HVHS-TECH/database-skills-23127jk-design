@@ -141,7 +141,7 @@ let highScores = snapshot.val()
  console.log(snapshot.val())
   console.log("the high score reads");
   console.log(highScores);
-  console.log(highScores["Jack"]);
+  console.log(highScores["game1"]["users"]["Jack"]);
   console.log("Jack got "+snapshot.val()["Jack"]+" points")
 }
 

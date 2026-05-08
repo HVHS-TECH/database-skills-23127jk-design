@@ -1,20 +1,159 @@
-console.log("hello chat");
+/**************************************************************
+ **************************************************************
+ **                                                          **
+ ** script.js is where you will write most of your code.     **
+ **                                                          **
+ **************************************************************
+ **************************************************************/
 
-let score = 1;
-let Ben = "jason";
+const HTML_OUTPUT = document.getElementById("databaseOutput");
 
-let players = {
-  ben:{
-    score:100,
-    wins:3
-  },
-  jason:{
-    score:3,
-    wins:4
+/**************************************************************/
+// helloWorld()
+// Demonstrate a minimal write to firebase
+// This function replaces the entire database with the message "Hello World"
+// 
+// This uses the set() operation to write the key:value pair "message":"Hello World"
+// The ref('/') part tells the operation to write to the base level of the database "/"
+// This means it replaces the whole database with message:Hello World
+/**************************************************************/
+function helloWorld() {
+  console.log("Running helloWorld()")
+  firebase.database().ref('/').set(
+    {
+      message: 'hello world'
+    }
+  )
+}
+function simpleRead() {
+  console.log("reading message()")
+  firebase.database().ref('/').child('message').once('value', displayRead,);
+  console.log("leaving simpleRead");
+
+}
+
+function displayRead(snapshot) {
+  console.log("running displayRead(), the message is : " + snapshot.val())
+  HTML_OUTPUT.innerHTML = snapshot.val();
+}
+ var dbData;
+function display(snapshot) {
+  dbData = snapshot.val();
+  if (dbData == null) {
+    console.log('there was no record when trying to read the message');
+  }
+  else {
+    console.log(dbData);
+    HTML_OUTPUT.innerHTML = snapshot.val();
   }
 }
-console.log()
-console.log(players['jason']['wins'])
-//console.log(players['jason']['score']['wins'])
-console.log("hello  Ben" +" you have "+ players['ben']['wins'])
-console.log("hello jason" +" you have "+ players['jason']['wins'])
+
+function fb_readError(error) {
+  console.log("there was an error reading the message");
+  console.error(error);
+}
+
+function messagecheck() {
+  console.log("reading message()")
+  firebase.database().ref('/').child('message').once('value', displayRead, fb_readError);
+  console.log("leaving simpleRead")
+}
+
+function fb_readListener() {
+  console.log("Read Listener");
+  firebase.database().ref('/message').on('value', fb_logDatabaseRead)
+}
+function fb_logDatabaseRead(snapshot) {
+  console.log("running logDatabaseRead(), the message is : " + snapshot.val())
+  dbData = snapshot.val();
+  if (dbData == null) {
+    console.log('there was no record when trying to read the message');
+  }
+  else {
+    console.log(dbData);
+    HTML_OUTPUT.innerHTML = snapshot.val();
+  }
+}
+
+
+function xiao() {
+  console.log("Running xiao()")
+  firebase.database().ref('user/xiao').set(
+    {
+      age: 99,
+      height: 5.11,
+    }
+  )
+}
+
+//firebase.database().ref('/').set(
+ // {
+   // game1: {
+     // users: {
+       // dhruv: 99999,
+       // jack: 10000,
+       // toby: 9,
+       // yug: 987654321,
+      //}
+    //}
+  //}
+//);
+  let game1= {
+    users: {
+      Dhruv: 99999,
+      Jack: 10000,
+      Micheal: "3.141",
+      Yug: 987654321,
+    },
+  game2: {
+    users: {
+      Dhruv: 13,
+      Jack: 14,
+      Mikeala: 7,
+      Sasha: 3,
+      Yug: 12,
+    }
+  }
+}
+//let game0 ={
+ // Jack:{
+  //  win:2,
+    //score:2
+ // }
+
+//}
+
+//firebase.database().ref('/').set(highscoreTable)
+firebase.database().ref('/game1/users/jenna/').set(123456789);
+firebase.database().ref('/game1/users/Benson/').set(6789);
+firebase.database().ref('/game1/users/Ben/').set(1234);
+
+
+let user = "toby";
+let score = "9";
+firebase.database().ref('/game1/users/'+user).set(
+  score
+);
+
+function fb_readHighScores() {
+  console.log("Reading High Scores");
+  firebase.database().ref('/game1').once('value', fb_displayHighScores ,fb_readError,)
+}
+
+function fb_displayHighScores(snapshot){
+let highScores = snapshot.val()
+ console.log(snapshot.val())
+  console.log("the high score reads");
+  console.log(game1);
+  console.log(game1['users']['Jack']);
+  console.log("Jack got "+game1['users']['Jack']+" points")
+}
+let names = Object.keys(game1);
+console.log(names);
+const OUTPUT = document.getElementById("databaseOutput");
+OUTPUT.innerHTML = "<h3>Added by javascript</h3>";
+OUTPUT.innerHTML += "<p>hello world</p>";
+//let scoreObject = {
+ // "Dwayne J": 300,
+ // "Ben":3
+//}
