@@ -36,7 +36,7 @@ function displayRead(snapshot) {
   console.log("running displayRead(), the message is : " + snapshot.val())
   HTML_OUTPUT.innerHTML = snapshot.val();
 }
- var dbData;
+var dbData;
 function display(snapshot) {
   dbData = snapshot.val();
   if (dbData == null) {
@@ -87,24 +87,26 @@ function xiao() {
 }
 
 //firebase.database().ref('/').set(
- // {
-   // game1: {
-     // users: {
-       // dhruv: 99999,
-       // jack: 10000,
-       // toby: 9,
-       // yug: 987654321,
-      //}
-    //}
-  //}
+// {
+// game1: {
+// users: {
+// dhruv: 99999,
+// jack: 10000,
+// toby: 9,
+// yug: 987654321,
+//}
+//}
+//}
 //);
-  let game1= {
+highscoresTable = {
+  game1: {
     users: {
       Dhruv: 99999,
       Jack: 10000,
       Micheal: "3.141",
       Yug: 987654321,
-    },
+    }
+  },
   game2: {
     users: {
       Dhruv: 13,
@@ -115,15 +117,16 @@ function xiao() {
     }
   }
 }
+
 //let game0 ={
- // Jack:{
-  //  win:2,
-    //score:2
- // }
+// Jack:{
+//  win:2,
+//score:2
+// }
 
 //}
 
-//firebase.database().ref('/').set(highscoreTable)
+firebase.database().ref('/').set(highscoresTable)
 firebase.database().ref('/game1/users/jenna/').set(123456789);
 firebase.database().ref('/game1/users/Benson/').set(6789);
 firebase.database().ref('/game1/users/Ben/').set(1234);
@@ -131,29 +134,52 @@ firebase.database().ref('/game1/users/Ben/').set(1234);
 
 let user = "toby";
 let score = "9";
-firebase.database().ref('/game1/users/'+user).set(
+firebase.database().ref('/game1/users/' + user).set(
   score
 );
 
 function fb_readHighScores() {
   console.log("Reading High Scores");
-  firebase.database().ref('/game1').once('value', fb_displayHighScores ,fb_readError,)
+  firebase.database().ref('/game1').once('value', fb_displayHighScores, fb_readError,)
 }
 
-function fb_displayHighScores(snapshot){
-let highScores = snapshot.val()
- console.log(snapshot.val())
+function fb_displayHighScores(snapshot) {
+  let highScores = snapshot.val()
+  console.log(snapshot.val())
   console.log("the high score reads");
-  console.log(game1);
-  console.log(game1['users']['Jack']);
-  console.log("Jack got "+game1['users']['Jack']+" points")
+  console.log(highScores);
+  console.log("Jack got " + highScores['users']['Jack'] + " points")
+
+
+  let names = Object.keys(highScores);
+  for (i = 0; i < names.length; i++) {
+    let key = names[i];
+    console.log("score " + i + " is for " + key)
+  }
 }
-let names = Object.keys(game1);
-console.log(names);
-const OUTPUT = document.getElementById("databaseOutput");
-OUTPUT.innerHTML = "<h3>Added by javascript</h3>";
-OUTPUT.innerHTML += "<p>hello world</p>";
+function fb_readHighScores2() {
+  console.log("Reading High Scores");
+  firebase.database().ref('/game1').once('value', fb_displayHighScores2, fb_readError,)
+}
+function fb_displayHighScores2(snapshot) {
+  snapshot.forEach(fb_showOneScore)
+}
+function fb_showOneScore(child) {
+  console.log(child.val());
+  //console.log(child.key+" got "+ child.val()+" points");
+}
+//let names = Object.keys(highScores);
+//console.log(names);
+
+
+
+
+//const OUTPUT = document.getElementById("databaseOutput");
+//OUTPUT.innerHTML = "<h3>jacks score is </h3>";
+//OUTPUT.innerHTML += "<p>10000</p>";
+
+
 //let scoreObject = {
- // "Dwayne J": 300,
- // "Ben":3
+// "Dwayne J": 300,
+// "Ben":3
 //}
