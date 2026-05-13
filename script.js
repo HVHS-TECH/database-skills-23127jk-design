@@ -74,8 +74,6 @@ function fb_logDatabaseRead(snapshot) {
     HTML_OUTPUT.innerHTML = snapshot.val();
   }
 }
-
-
 function xiao() {
   console.log("Running xiao()")
   firebase.database().ref('user/xiao').set(
@@ -85,6 +83,25 @@ function xiao() {
     }
   )
 }
+
+var GLOBAL_user;
+
+function fb_login() {
+  authenticationListener = firebase.auth().onAuthStateChanged(fb_handleLogin);
+}
+
+
+
+function popupLogin(){
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+firebase.auth().signInWithPopup(provider).then((result) => {
+  GLOBAL_user = result.user; //save the user details object to a globel variable
+  console.log("User has logged in")
+});
+}
+
+
 
 //firebase.database().ref('/').set(
 // {
@@ -117,20 +134,10 @@ highscoresTable = {
     }
   }
 }
-
-//let game0 ={
-// Jack:{
-//  win:2,
-//score:2
-// }
-
-//}
-
 firebase.database().ref('/').set(highscoresTable)
-firebase.database().ref('/game1/users/jenna/').set(123456789);
+//firebase.database().ref('/game1/users/jenna/').set(123456789);
 firebase.database().ref('/game1/users/Benson/').set(6789);
 firebase.database().ref('/game1/users/Ben/').set(1234);
-
 
 let user;
 //let score = "9";
@@ -151,16 +158,16 @@ function fb_displayHighScores(snapshot) {
   console.log(snapshot.val());
   snapshot.forEach(fb_showOneScore)
   let names = Object.keys(highScores);
-  let value = [highScores]["users"]
+  let value = highScores['users']
   for(i = 0; i < names.length; i++) {
     let key = names[i];
-    console.log("score " +key+ " is for " + value)
+    console.log(key+" score "+ " is " + i)
   }
 
 }
 function fb_readHighScores2() {
   console.log("Reading High Scores");
-  firebase.database().ref('/game1/users').orderByValue().limitToLast(3).once('value', fb_displayHighScores2, fb_readError,)
+  firebase.database().ref('/game1/users').orderByValue().limitToLast(5).once('value', fb_displayHighScores2, fb_readError,)
 }
 function fb_displayHighScores2(snapshot) {
   console.log(snapshot.val());
@@ -169,17 +176,19 @@ function fb_displayHighScores2(snapshot) {
   let names = Object.keys(highScores);
   for(i = 0; i < names.length; i++) {
     let key = names[i];
-    console.log("score " +i+ " is for " + key)
-   HTML_OUTPUT.innerHTML += "score "+ key + " points<br>"
+  console.log(key+" score "+ " is " + i)
+ //  HTML_OUTPUT.innerHTML += key+ " score "+ value+ " points<br>"
 }
+
 }
 function fb_showOneScore(child) {
-  console.log(child.val());
+ // console.log(child.val());
   console.log(child.key+" got "+ child.val()+" points");
+  HTML_OUTPUT.innerHTML += child.key+ " score "+ child.val()+ " points<br>"
 }
-//let names = Object.keys(highScores);
-//console.log(names);
-
+//const child = [1, 2, 3];
+//child.reverse();
+//console.log(child); // [3, 2, 1]
 
 const OUTPUT = document.getElementById("databaseOutput");
 //OUTPUT.innerHTML = "<h3>jacks score is </h3>";
