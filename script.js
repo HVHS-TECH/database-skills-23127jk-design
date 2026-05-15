@@ -83,26 +83,6 @@ function xiao() {
     }
   )
 }
-
-var GLOBAL_user;
-
-function fb_login() {
-  authenticationListener = firebase.auth().onAuthStateChanged(fb_handleLogin);
-}
-
-
-
-function popupLogin(){
-  var provider = new firebase.auth.GoogleAuthProvider();
-
-firebase.auth().signInWithPopup(provider).then((result) => {
-  GLOBAL_user = result.user; //save the user details object to a globel variable
-  console.log("User has logged in")
-});
-}
-
-
-
 //firebase.database().ref('/').set(
 // {
 // game1: {
@@ -120,7 +100,7 @@ highscoresTable = {
     users: {
       Dhruv: 99999,
       Jack: 10000,
-     // Micheal: "3.141",
+      // Micheal: "3.141",
       Yug: 987654321,
     }
   },
@@ -142,7 +122,7 @@ firebase.database().ref('/game1/users/Ben/').set(1234);
 let user;
 //let score = "9";
 //firebase.database().ref('/game1/users/' + user).set(
- // score
+// score
 //);
 
 function fb_readHighScores() {
@@ -152,16 +132,16 @@ function fb_readHighScores() {
 
 function fb_displayHighScores(snapshot) {
   console.log("the high score reads");
- // console.log(highScores);
+  // console.log(highScores);
   //console.log("Jack got " + highScores['users']['Jack'] + " points")
-    var highScores = snapshot.val();
+  var highScores = snapshot.val();
   console.log(snapshot.val());
   snapshot.forEach(fb_showOneScore)
   let names = Object.keys(highScores);
   let value = highScores['users']
-  for(i = 0; i < names.length; i++) {
+  for (i = 0; i < names.length; i++) {
     let key = names[i];
-    console.log(key+" score "+ " is " + i)
+    console.log(key + " score " + " is " + i)
   }
 
 }
@@ -174,17 +154,17 @@ function fb_displayHighScores2(snapshot) {
   snapshot.forEach(fb_showOneScore)
   var highScores = snapshot.val();
   let names = Object.keys(highScores);
-  for(i = 0; i < names.length; i++) {
+  for (i = 0; i < names.length; i++) {
     let key = names[i];
-  console.log(key+" score "+ " is " + i)
- //  HTML_OUTPUT.innerHTML += key+ " score "+ value+ " points<br>"
-}
+    console.log(key + " score " + " is " + i)
+    //  HTML_OUTPUT.innerHTML += key+ " score "+ value+ " points<br>"
+  }
 
 }
 function fb_showOneScore(child) {
- // console.log(child.val());
-  console.log(child.key+" got "+ child.val()+" points");
-  HTML_OUTPUT.innerHTML += child.key+ " score "+ child.val()+ " points<br>"
+  // console.log(child.val());
+  console.log(child.key + " got " + child.val() + " points");
+  HTML_OUTPUT.innerHTML += child.key + " score " + child.val() + " points<br>"
 }
 //const child = [1, 2, 3];
 //child.reverse();
